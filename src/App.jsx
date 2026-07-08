@@ -5,7 +5,6 @@ import {
   Fuel,
   Gauge,
   GitBranch,
-  Headlights,
   Navigation,
   Route,
   Settings2,
@@ -191,7 +190,7 @@ export function App() {
       <footer className="bottom-bar">
         <div className="fuel-block"><Fuel size={24} /><span>E</span><i /><strong>F</strong><em>{telemetry.ego.rangeKm} km</em></div>
         <div className="thermal-block"><Thermometer size={24} /><span>C</span><i /><strong>H</strong></div>
-        <div className="headlight-block"><Headlights size={30} /><span>AUTO</span></div>
+        <div className="headlight-block"><span className="headlight-symbol">▰▰▰</span><span>AUTO</span></div>
       </footer>
     </div>
   );
