@@ -1,17 +1,14 @@
 import {
   BatteryCharging,
-  BusFront,
   CarFront,
   Fuel,
   Gauge,
   GitBranch,
   Navigation,
-  Route,
   Settings2,
   ShieldCheck,
   Thermometer,
   Timer,
-  TrafficCone,
 } from 'lucide-react';
 import { telemetry } from './data/mockTelemetry.js';
 
@@ -51,13 +48,25 @@ function GlassGauge({ side, value, unit, label, min = '0', max = '6' }) {
   );
 }
 
+function DetectionSilhouette({ type }) {
+  if (type === 'pedestrian') {
+    return <span className="pedestrian-figure" />;
+  }
+
+  return (
+    <span className={`silhouette silhouette-${type}`}>
+      <i />
+      <b />
+    </span>
+  );
+}
+
 function RoadObject({ object }) {
-  const Icon = object.type === 'bus' ? BusFront : object.type === 'car' ? CarFront : TrafficCone;
   return (
     <div className={`${objectClassName[object.type]} ${object.risk === 'high' ? 'is-risk' : ''}`} data-lane={object.lane}>
       <div className="object-distance">{object.distanceM} m</div>
       <div className="object-outline">
-        {object.type === 'pedestrian' ? <span className="pedestrian-figure" /> : <Icon size={object.type === 'bus' ? 74 : 52} strokeWidth={1.7} />}
+        <DetectionSilhouette type={object.type} />
       </div>
       <span>{object.label}</span>
     </div>
@@ -68,9 +77,16 @@ function RoadScene() {
   return (
     <main className="road-scene" aria-label="Forward perception road visualization">
       <div className="horizon-glow" />
+      <div className="mountains mountains-left" />
+      <div className="mountains mountains-right" />
       <div className="city-line" />
-      <div className="radial-speed-arc" />
+      <div className="road-shoulder road-shoulder-left" />
+      <div className="road-shoulder road-shoulder-right" />
+      <div className="streetlights streetlights-left" />
+      <div className="streetlights streetlights-right" />
       <div className="road-surface">
+        <div className="lane-edge lane-edge-left" />
+        <div className="lane-edge lane-edge-right" />
         <div className="lane lane-left" />
         <div className="lane lane-center-left" />
         <div className="lane lane-center-right" />
@@ -139,6 +155,7 @@ export function App() {
     <div className="cluster-shell">
       <div className="ambient ambient-blue" />
       <div className="ambient ambient-violet" />
+      <div className="radial-speed-arc" />
 
       <header className="top-bar">
         <div className="battery-range">
@@ -155,7 +172,7 @@ export function App() {
       </header>
 
       <aside className="navigation-card">
-        <Route size={58} />
+        <div className="turn-arrow" />
         <div>
           <strong>{telemetry.navigation.distanceKm} km</strong>
           <em>{telemetry.navigation.direction}</em>
