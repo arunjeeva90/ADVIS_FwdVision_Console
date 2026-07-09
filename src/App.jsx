@@ -33,6 +33,84 @@ const objectAssetSrc = {
   'ped-right': '/assets/vehicles/pedestrian/pedestrian_crossing_left_to_right.png',
 };
 
+const laneOffsetsM = {
+  'far-left': -5.25,
+  left: -3.5,
+  center: 0,
+  right: 3.5,
+  'far-right': 5.25,
+  'shoulder-right': 6.3,
+};
+
+const objectRealWidthM = {
+  car: 1.8,
+  bus: 2.55,
+  auto: 1.35,
+  'two-wheeler': 0.85,
+  pedestrian: 0.55,
+};
+
+const objectAspect = {
+  car: 0.78,
+  bus: 0.72,
+  auto: 0.96,
+  'two-wheeler': 1.24,
+  pedestrian: 1.72,
+};
+
+const sceneProjection = {
+  vanishingX: 50,
+  vanishingY: 26,
+  egoLaneLeftX: 38.5,
+  egoLaneRightX: 61.5,
+  egoGroundY: 87,
+  horizonDistanceM: 115,
+  laneWidthM: 3.5,
+};
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function projectDistance(distanceM) {
+  const d = clamp(distanceM, 6, sceneProjection.horizonDistanceM);
+  const normalized = 1 - d / sceneProjection.horizonDistanceM;
+  return Math.pow(normalized, 0.58);
+}
+
+function laneCenterXAtDepth(depth, laneOffsetM) {
+  const egoLaneWidth = sceneProjection.egoLaneRightX - sceneProjection.egoLaneLeftX;
+  const pxPerMeterAtEgo = egoLaneWidth / sceneProjection.laneWidthM;
+  const egoCenterX = (sceneProjection.egoLaneLeftX + sceneProjection.egoLaneRightX) / 2;
+  const groundX = egoCenterX + laneOffsetM * pxPerMeterAtEgo;
+  return sceneProjection.vanishingX + (groundX - sceneProjection.vanishingX) * depth;
+}
+
+function laneWidthPxAtDepth(depth) {
+  const egoLaneWidth = sceneProjection.egoLaneRightX - sceneProjection.egoLaneLeftX;
+  return egoLaneWidth * depth;
+}
+
+function projectRoadObject(object) {
+  const depth = projectDistance(object.distanceM);
+  const x = laneCenterXAtDepth(depth, laneOffsetsM[object.lane] ?? 0);
+  const y = sceneProjection.vanishingY + (sceneProjection.egoGroundY - sceneProjection.vanishingY) * depth;
+  const laneWidthPx = laneWidthPxAtDepth(depth);
+  const realWidthM = objectRealWidthM[object.type] ?? 1.8;
+  const width = clamp(laneWidthPx * (realWidthM / sceneProjection.laneWidthM), 3.8, 14.8);
+  const height = width * (objectAspect[object.type] ?? 0.85);
+  const scale = clamp(0.54 + depth * 0.92, 0.48, 1.28);
+
+  return {
+    left: `${x}%`,
+    top: `${y}%`,
+    '--object-width': `${width}vw`,
+    '--object-height': `${height}vw`,
+    '--object-scale': scale,
+    '--object-anchor-y': '-100%',
+  };
+}
+
 function StatusPill({ icon, label }) {
   return (
     <div className="status-pill">
@@ -76,9 +154,15 @@ function DetectionSilhouette({ type }) {
 
 function RoadObject({ object }) {
   const assetSrc = objectAssetSrc[object.id];
+  const projectedStyle = projectRoadObject(object);
 
   return (
-    <div className={`${objectClassName[object.type]} ${object.risk === 'high' ? 'is-risk' : ''}`} data-lane={object.lane}>
+    <div
+      className={`${objectClassName[object.type]} ${object.risk === 'high' ? 'is-risk' : ''}`}
+      data-lane={object.lane}
+      data-type={object.type}
+      style={projectedStyle}
+    >
       <div className="object-distance">{object.distanceM} m</div>
       <div className="object-outline">
         {assetSrc ? (
