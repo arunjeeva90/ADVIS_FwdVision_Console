@@ -46,9 +46,9 @@
 }
 
 .ego-vehicle {
-  bottom: 8px !important;
-  width: 570px !important;
-  height: 335px !important;
+  bottom: 2px !important;
+  width: 500px !important;
+  height: 300px !important;
   z-index: 30 !important;
 }
 
@@ -56,14 +56,14 @@
   position: absolute;
   left: 50%;
   bottom: 0;
-  width: 445px;
+  width: 380px;
   height: auto;
-  max-height: 318px;
+  max-height: 275px;
   transform: translateX(-50%);
   object-fit: contain;
   filter:
-    drop-shadow(0 28px 38px rgba(0, 0, 0, 0.86))
-    drop-shadow(0 0 10px rgba(110, 160, 255, 0.14));
+    drop-shadow(0 24px 34px rgba(0, 0, 0, 0.84))
+    drop-shadow(0 0 8px rgba(110, 160, 255, 0.10));
   z-index: 4;
 }
 
@@ -75,22 +75,22 @@
 }
 
 .sensor-halo {
-  opacity: 0.56;
+  opacity: 0.52;
   box-shadow:
-    0 0 10px rgba(255, 196, 58, 0.24),
-    inset 0 0 12px rgba(255, 185, 40, 0.08) !important;
+    0 0 8px rgba(255, 196, 58, 0.22),
+    inset 0 0 10px rgba(255, 185, 40, 0.08) !important;
 }
 
 .halo-1 {
-  width: 385px !important;
-  height: 118px !important;
-  bottom: 15px !important;
+  width: 300px !important;
+  height: 95px !important;
+  bottom: 14px !important;
 }
 
 .halo-2 {
-  width: 300px !important;
-  height: 78px !important;
-  bottom: 48px !important;
+  width: 230px !important;
+  height: 62px !important;
+  bottom: 42px !important;
 }
 
 .object-outline {
@@ -98,7 +98,7 @@
 }
 
 .object-distance {
-  box-shadow: 0 0 10px rgba(255, 64, 91, 0.38) !important;
+  box-shadow: 0 0 8px rgba(255, 64, 91, 0.32) !important;
 }
 
 .runtime-panel {
