@@ -1,0 +1,60 @@
+.object-asset {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 12px currentColor) drop-shadow(0 0 26px rgba(255, 160, 70, 0.28));
+}
+
+.object-outline .silhouette,
+.object-outline .pedestrian-figure {
+  display: none;
+}
+
+.object-asset[src=''] + .silhouette,
+.object-asset:not([src]) + .silhouette {
+  display: block;
+}
+
+.object-card .object-outline {
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.object-card.is-risk .object-outline {
+  background: transparent;
+  box-shadow: none;
+}
+
+.object-card.is-risk .object-outline::before {
+  content: '';
+  position: absolute;
+  inset: -12px -18px;
+  border: 2px solid var(--red);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 64, 91, 0.62), inset 0 0 20px rgba(255, 64, 91, 0.1);
+  z-index: 1;
+}
+
+.object-card[data-lane='center'] .object-outline { width: 116px; height: 102px; }
+.object-card[data-lane='left'] .object-outline { width: 108px; height: 96px; }
+.object-card[data-lane='right'] .object-outline { width: 132px; height: 118px; }
+.object-card[data-lane='far-right'] .object-outline { width: 104px; height: 94px; }
+.object-card[data-lane='far-left'] .object-outline { width: 112px; height: 126px; }
+.object-card[data-lane='shoulder-right'] .object-outline { width: 76px; height: 122px; }
+
+.object-card[data-lane='center'] { top: 152px; }
+.object-card[data-lane='left'] { left: 34%; top: 255px; }
+.object-card[data-lane='right'] { right: 27.6%; top: 214px; }
+.object-card[data-lane='far-right'] { right: 18.8%; top: 272px; }
+.object-card[data-lane='far-left'] { left: 24.6%; top: 286px; }
+.object-card[data-lane='shoulder-right'] { right: 10.8%; top: 284px; }
+
+.object-card > span:last-child {
+  margin-top: -2px;
+  opacity: 0.78;
+  text-shadow: 0 0 8px currentColor;
+}
