@@ -7,7 +7,9 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "capture": "node scripts/capture-console.mjs",
+    "compare": "node scripts/compare-console.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
@@ -17,6 +19,8 @@
     "lucide-react": "latest"
   },
   "devDependencies": {
+    "canvas": "latest",
+    "playwright": "latest",
     "eslint": "latest",
     "eslint-plugin-react": "latest",
     "eslint-plugin-react-hooks": "latest",
