@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { telemetry } from './data/mockTelemetry.js';
 import './objectAssets.css';
+import './frozenRefinements.css';
 
 const objectClassName = {
   car: 'object-card object-car',
@@ -22,7 +23,7 @@ const objectClassName = {
 };
 
 const objectAssetSrc = {
-  'lead-car': '/assets/vehicles/same_lane_vehicle/samelane_vehicle_red.png',
+  'lead-car': '/assets/vehicles/same_lane_vehicle/samelane_vehicle_orange.png',
   'left-car': '/assets/vehicles/car/car_left_lane.png',
   'bus-right': '/assets/vehicles/bus/bus_right_lane.png',
   'auto-right': '/assets/vehicles/autorickshaw/autorickshaw_right_lane.png',
