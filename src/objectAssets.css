@@ -1,5 +1,7 @@
 .object-card {
+  position: absolute;
   transform-origin: bottom center;
+  transform: translate(-50%, var(--object-anchor-y, -100%)) scale(var(--object-scale, 1));
 }
 
 .object-asset {
@@ -9,17 +11,17 @@
   object-fit: contain;
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 0 2px currentColor);
+  filter: drop-shadow(0 0 1.5px currentColor);
 }
 
 .object-card:not(.is-risk) .object-asset {
-  opacity: 0.92;
-  filter: drop-shadow(0 0 2px currentColor);
+  opacity: 0.9;
+  filter: drop-shadow(0 0 1.5px currentColor);
 }
 
 .object-card.is-risk .object-asset {
   opacity: 0.98;
-  filter: drop-shadow(0 0 5px rgba(255, 64, 91, 0.48));
+  filter: drop-shadow(0 0 4px rgba(255, 64, 91, 0.42));
 }
 
 .object-outline .silhouette,
@@ -33,6 +35,8 @@
 }
 
 .object-card .object-outline {
+  width: var(--object-width, 6vw);
+  height: var(--object-height, 5vw);
   border: 0;
   background: transparent;
   overflow: visible;
@@ -54,53 +58,17 @@
   z-index: 1;
 }
 
-.object-card[data-lane='center'] .object-outline { width: 122px; height: 112px; }
-.object-card[data-lane='left'] .object-outline { width: 118px; height: 86px; }
-.object-card[data-lane='right'] .object-outline { width: 148px; height: 112px; }
-.object-card[data-lane='far-right'] .object-outline { width: 108px; height: 90px; }
-.object-card[data-lane='far-left'] .object-outline { width: 104px; height: 122px; }
-.object-card[data-lane='shoulder-right'] .object-outline { width: 72px; height: 118px; }
-
-.object-card[data-lane='center'] {
-  left: calc(50% - 56px);
-  top: 168px;
-  transform: scale(1.05);
-}
-
-.object-card[data-lane='left'] {
-  left: 35.5%;
-  top: 302px;
-  transform: scale(1.02);
-}
-
-.object-card[data-lane='right'] {
-  right: 29%;
-  top: 284px;
-  transform: scale(1.18);
-}
-
-.object-card[data-lane='far-right'] {
-  right: 20.8%;
-  top: 300px;
-  transform: scale(0.98);
-}
-
-.object-card[data-lane='far-left'] {
-  left: 26.5%;
-  top: 332px;
-  transform: scale(0.88);
-}
-
-.object-card[data-lane='shoulder-right'] {
-  right: 12.5%;
-  top: 286px;
-  transform: scale(0.9);
+.object-distance {
+  transform: translateY(-4px) scale(calc(1 / var(--object-scale, 1)));
+  transform-origin: center bottom;
 }
 
 .object-label {
   margin-top: -2px;
   opacity: 0.58;
   text-shadow: 0 0 3px currentColor;
+  transform: scale(calc(1 / var(--object-scale, 1)));
+  transform-origin: center top;
 }
 
 .object-card > span:not(.object-label) {
