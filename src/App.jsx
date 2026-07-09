@@ -59,13 +59,17 @@ const objectAspect = {
 };
 
 const sceneProjection = {
+  // Calibrated to the two reference lane lines drawn in EgoPathOverlay.jsx.
   vanishingX: 50,
-  vanishingY: 26,
-  egoLaneLeftX: 38.5,
-  egoLaneRightX: 61.5,
-  egoGroundY: 87,
-  horizonDistanceM: 115,
+  vanishingY: 39.7,
+  egoLaneLeftX: 38.2,
+  egoLaneRightX: 61.8,
+  egoGroundY: 88,
+  nearDistanceM: 6,
+  farDistanceM: 95,
   laneWidthM: 3.5,
+  egoReferenceWidthPx: 380,
+  referenceViewportWidthPx: 1600,
 };
 
 function clamp(value, min, max) {
@@ -73,9 +77,14 @@ function clamp(value, min, max) {
 }
 
 function projectDistance(distanceM) {
-  const d = clamp(distanceM, 6, sceneProjection.horizonDistanceM);
-  const normalized = 1 - d / sceneProjection.horizonDistanceM;
-  return Math.pow(normalized, 0.58);
+  const d = clamp(distanceM, sceneProjection.nearDistanceM, sceneProjection.farDistanceM);
+  const invNear = 1 / sceneProjection.nearDistanceM;
+  const invFar = 1 / sceneProjection.farDistanceM;
+  const invD = 1 / d;
+  const normalized = clamp((invD - invFar) / (invNear - invFar), 0, 1);
+
+  // Inverse-distance projection gives a more natural road-plane placement than linear distance.
+  return Math.pow(normalized, 0.68);
 }
 
 function laneCenterXAtDepth(depth, laneOffsetM) {
@@ -86,24 +95,30 @@ function laneCenterXAtDepth(depth, laneOffsetM) {
   return sceneProjection.vanishingX + (groundX - sceneProjection.vanishingX) * depth;
 }
 
-function laneWidthPxAtDepth(depth) {
-  const egoLaneWidth = sceneProjection.egoLaneRightX - sceneProjection.egoLaneLeftX;
-  return egoLaneWidth * depth;
+function apparentObjectWidthVw(object, depth) {
+  const distanceM = clamp(object.distanceM, sceneProjection.nearDistanceM, sceneProjection.farDistanceM);
+  const realWidthM = objectRealWidthM[object.type] ?? 1.8;
+  const typeScale = realWidthM / objectRealWidthM.car;
+  const distanceScale = Math.pow(sceneProjection.nearDistanceM / (distanceM + 2), 0.72);
+  const depthBoost = 0.72 + depth * 0.56;
+  const apparentPx = sceneProjection.egoReferenceWidthPx * typeScale * distanceScale * depthBoost;
+  const vw = (apparentPx / sceneProjection.referenceViewportWidthPx) * 100;
+
+  return clamp(vw, 3.2, object.type === 'bus' ? 11.5 : 9.2);
 }
 
 function projectRoadObject(object) {
   const depth = projectDistance(object.distanceM);
   const x = laneCenterXAtDepth(depth, laneOffsetsM[object.lane] ?? 0);
   const y = sceneProjection.vanishingY + (sceneProjection.egoGroundY - sceneProjection.vanishingY) * depth;
-  const laneWidthPx = laneWidthPxAtDepth(depth);
-  const realWidthM = objectRealWidthM[object.type] ?? 1.8;
-  const width = clamp(laneWidthPx * (realWidthM / sceneProjection.laneWidthM), 3.8, 14.8);
+  const width = apparentObjectWidthVw(object, depth);
   const height = width * (objectAspect[object.type] ?? 0.85);
-  const scale = clamp(0.54 + depth * 0.92, 0.48, 1.28);
+  const scale = clamp(0.58 + depth * 0.82, 0.52, 1.22);
 
   return {
     left: `${x}%`,
     top: `${y}%`,
+    zIndex: Math.round(18 + depth * 8),
     '--object-width': `${width}vw`,
     '--object-height': `${height}vw`,
     '--object-scale': scale,
