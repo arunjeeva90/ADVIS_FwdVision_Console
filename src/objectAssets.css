@@ -1,3 +1,7 @@
+.object-card {
+  transform-origin: bottom center;
+}
+
 .object-asset {
   display: block;
   max-width: 100%;
@@ -5,17 +9,17 @@
   object-fit: contain;
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 0 3px currentColor);
+  filter: drop-shadow(0 0 2px currentColor);
 }
 
 .object-card:not(.is-risk) .object-asset {
-  opacity: 0.9;
+  opacity: 0.92;
   filter: drop-shadow(0 0 2px currentColor);
 }
 
 .object-card.is-risk .object-asset {
   opacity: 0.98;
-  filter: drop-shadow(0 0 6px rgba(255, 64, 91, 0.58));
+  filter: drop-shadow(0 0 5px rgba(255, 64, 91, 0.48));
 }
 
 .object-outline .silhouette,
@@ -50,19 +54,48 @@
   z-index: 1;
 }
 
-.object-card[data-lane='center'] .object-outline { width: 118px; height: 108px; }
-.object-card[data-lane='left'] .object-outline { width: 98px; height: 72px; }
-.object-card[data-lane='right'] .object-outline { width: 122px; height: 92px; }
-.object-card[data-lane='far-right'] .object-outline { width: 88px; height: 76px; }
-.object-card[data-lane='far-left'] .object-outline { width: 88px; height: 104px; }
-.object-card[data-lane='shoulder-right'] .object-outline { width: 58px; height: 96px; }
+.object-card[data-lane='center'] .object-outline { width: 122px; height: 112px; }
+.object-card[data-lane='left'] .object-outline { width: 118px; height: 86px; }
+.object-card[data-lane='right'] .object-outline { width: 148px; height: 112px; }
+.object-card[data-lane='far-right'] .object-outline { width: 108px; height: 90px; }
+.object-card[data-lane='far-left'] .object-outline { width: 104px; height: 122px; }
+.object-card[data-lane='shoulder-right'] .object-outline { width: 72px; height: 118px; }
 
-.object-card[data-lane='center'] { left: calc(50% - 52px); top: 150px; }
-.object-card[data-lane='left'] { left: 35.2%; top: 274px; transform: perspective(420px) rotateX(2deg) rotateZ(-1deg); }
-.object-card[data-lane='right'] { right: 28.8%; top: 254px; transform: perspective(420px) rotateX(2deg) rotateZ(1deg); }
-.object-card[data-lane='far-right'] { right: 20.5%; top: 284px; transform: perspective(420px) rotateX(2deg) rotateZ(1deg); }
-.object-card[data-lane='far-left'] { left: 26.2%; top: 318px; transform: perspective(420px) rotateX(2deg) rotateZ(-2deg); }
-.object-card[data-lane='shoulder-right'] { right: 12%; top: 300px; transform: perspective(420px) rotateX(2deg) rotateZ(1deg); }
+.object-card[data-lane='center'] {
+  left: calc(50% - 56px);
+  top: 168px;
+  transform: scale(1.05);
+}
+
+.object-card[data-lane='left'] {
+  left: 35.5%;
+  top: 302px;
+  transform: scale(1.02);
+}
+
+.object-card[data-lane='right'] {
+  right: 29%;
+  top: 284px;
+  transform: scale(1.18);
+}
+
+.object-card[data-lane='far-right'] {
+  right: 20.8%;
+  top: 300px;
+  transform: scale(0.98);
+}
+
+.object-card[data-lane='far-left'] {
+  left: 26.5%;
+  top: 332px;
+  transform: scale(0.88);
+}
+
+.object-card[data-lane='shoulder-right'] {
+  right: 12.5%;
+  top: 286px;
+  transform: scale(0.9);
+}
 
 .object-label {
   margin-top: -2px;
