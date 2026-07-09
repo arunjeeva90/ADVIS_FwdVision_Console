@@ -20,6 +20,15 @@ const objectClassName = {
   pedestrian: 'object-card object-pedestrian',
 };
 
+const objectAssetSrc = {
+  'lead-car': '/assets/vehicles/same_lane_vehicle/samelane_vehicle_red.png',
+  'left-car': '/assets/vehicles/car/car_left_lane.png',
+  'bus-right': '/assets/vehicles/bus/bus_right_lane.png',
+  'auto-right': '/assets/vehicles/autorickshaw/autorickshaw_right_lane.png',
+  'bike-left': '/assets/vehicles/2W_rider/2W_rider_left_lane.png',
+  'ped-right': '/assets/vehicles/pedestrian/pedestrian_crossing_left_to_right.png',
+};
+
 function StatusPill({ icon, label }) {
   return (
     <div className="status-pill">
@@ -62,11 +71,20 @@ function DetectionSilhouette({ type }) {
 }
 
 function RoadObject({ object }) {
+  const assetSrc = objectAssetSrc[object.id];
+
   return (
     <div className={`${objectClassName[object.type]} ${object.risk === 'high' ? 'is-risk' : ''}`} data-lane={object.lane}>
       <div className="object-distance">{object.distanceM} m</div>
       <div className="object-outline">
-        <DetectionSilhouette type={object.type} />
+        {assetSrc ? (
+          <>
+            <img className="object-asset" src={assetSrc} alt={object.label} />
+            <DetectionSilhouette type={object.type} />
+          </>
+        ) : (
+          <DetectionSilhouette type={object.type} />
+        )}
       </div>
       <span>{object.label}</span>
     </div>
