@@ -3,7 +3,7 @@
 
 .road-scene {
   background-image:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.2) 56%, rgba(0, 0, 0, 0.62)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.18) 56%, rgba(0, 0, 0, 0.58)),
     url('/assets/vehicles/landscape.png');
   background-size: cover;
   background-position: center 48%;
@@ -18,71 +18,80 @@
 }
 
 .horizon-glow {
-  opacity: 0.42 !important;
-  filter: blur(9px) !important;
+  opacity: 0.34 !important;
+  filter: blur(10px) !important;
 }
 
 .road-surface::before {
-  opacity: 0.18;
+  opacity: 0.12;
 }
 
 .lane,
 .lane-edge {
-  opacity: 0.68;
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.28));
+  opacity: 0.58;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.22));
 }
 
 .ego-path {
-  opacity: 0.76;
+  opacity: 0.78;
+  width: 250px !important;
+  clip-path: polygon(44% 0, 56% 0, 82% 100%, 18% 100%) !important;
   box-shadow:
-    inset 0 0 34px rgba(36, 231, 255, 0.22),
-    0 0 20px rgba(38, 203, 255, 0.2) !important;
+    inset 0 0 28px rgba(36, 231, 255, 0.2),
+    0 0 16px rgba(38, 203, 255, 0.18) !important;
 }
 
 .radial-speed-arc {
-  opacity: 0.26 !important;
-  filter: drop-shadow(0 0 14px rgba(39, 104, 255, 0.32)) !important;
+  opacity: 0.23 !important;
+  filter: drop-shadow(0 0 12px rgba(39, 104, 255, 0.28)) !important;
 }
 
 .ego-vehicle {
-  bottom: 26px !important;
-  width: 286px !important;
-  height: 205px !important;
+  bottom: 38px !important;
+  width: 265px !important;
+  height: 176px !important;
+  z-index: 28 !important;
 }
 
-.car-body {
-  width: 188px !important;
-  height: 116px !important;
-  border-radius: 38px 38px 20px 20px !important;
-  background:
-    linear-gradient(180deg, rgba(230, 238, 255, 0.95) 0%, rgba(86, 101, 132, 0.98) 28%, rgba(18, 25, 40, 0.98) 70%, rgba(3, 4, 8, 1) 100%),
-    url('/assets/vehicles/ego_vehicle.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow:
-    0 18px 32px rgba(0, 0, 0, 0.82),
-    0 0 24px rgba(121, 179, 255, 0.34) !important;
+.ego-vehicle-asset {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  width: 210px;
+  height: auto;
+  max-height: 150px;
+  transform: translateX(-50%);
+  object-fit: contain;
+  filter:
+    drop-shadow(0 18px 24px rgba(0, 0, 0, 0.78))
+    drop-shadow(0 0 14px rgba(121, 179, 255, 0.28));
+  z-index: 4;
 }
 
-.rear-glass {
-  left: 35px !important;
-  right: 35px !important;
-  height: 36px !important;
-  background: linear-gradient(180deg, #0c142d, #03050b) !important;
-}
-
-.tail-light {
-  top: 61px !important;
-  height: 6px !important;
-  box-shadow: 0 0 12px rgba(255, 30, 44, 0.78) !important;
+.car-body,
+.rear-glass,
+.tail-light,
+.bumper {
+  display: none !important;
 }
 
 .sensor-halo {
-  opacity: 0.76;
+  opacity: 0.66;
   box-shadow:
-    0 0 12px rgba(255, 196, 58, 0.42),
-    inset 0 0 14px rgba(255, 185, 40, 0.14) !important;
+    0 0 10px rgba(255, 196, 58, 0.34),
+    inset 0 0 12px rgba(255, 185, 40, 0.12) !important;
+}
+
+.halo-1 {
+  width: 210px !important;
+  height: 70px !important;
+  bottom: 0 !important;
+}
+
+.halo-2 {
+  width: 164px !important;
+  height: 48px !important;
+  bottom: 18px !important;
 }
 
 .object-outline {
@@ -90,7 +99,7 @@
 }
 
 .object-distance {
-  box-shadow: 0 0 12px rgba(255, 64, 91, 0.46) !important;
+  box-shadow: 0 0 10px rgba(255, 64, 91, 0.38) !important;
 }
 
 .runtime-panel {
