@@ -23,7 +23,7 @@ const objectClassName = {
 };
 
 const objectAssetSrc = {
-  'lead-car': '/assets/vehicles/same_lane_vehicle/samelane_vehicle_orange.png',
+  'lead-car': '/assets/vehicles/same_lane_vehicle/samelane_vehicle_red.png',
   'left-car': '/assets/vehicles/car/car_left_lane.png',
   'bus-right': '/assets/vehicles/bus/bus_right_lane.png',
   'auto-right': '/assets/vehicles/autorickshaw/autorickshaw_right_lane.png',
@@ -88,7 +88,7 @@ function RoadObject({ object }) {
           <DetectionSilhouette type={object.type} />
         )}
       </div>
-      <span>{object.label}</span>
+      {object.risk === 'high' && <span className="object-label">{object.label}</span>}
     </div>
   );
 }
@@ -121,11 +121,7 @@ function RoadScene() {
       <div className="ego-vehicle">
         <div className="sensor-halo halo-1" />
         <div className="sensor-halo halo-2" />
-        <div className="car-body">
-          <div className="rear-glass" />
-          <div className="tail-light" />
-          <div className="bumper" />
-        </div>
+        <img className="ego-vehicle-asset" src="/assets/vehicles/ego_vehicle/ego_vehicle.png" alt="Ego vehicle" />
       </div>
     </main>
   );
