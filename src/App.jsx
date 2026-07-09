@@ -33,95 +33,39 @@ const objectAssetSrc = {
   'ped-right': '/assets/vehicles/pedestrian/pedestrian_crossing_left_to_right.png',
 };
 
-const laneOffsetsM = {
-  'far-left': -5.25,
-  left: -3.5,
-  center: 0,
-  right: 3.5,
-  'far-right': 5.25,
-  'shoulder-right': 6.3,
+const lockedDesignPlacement = {
+  // Hand-calibrated to the locked reference concept image.
+  // These are object ground-contact anchors in the road scene.
+  'lead-car': { x: 50.2, y: 47.2, width: 5.2, height: 4.0, scale: 1, zIndex: 24 },
+  'left-car': { x: 37.8, y: 49.8, width: 7.2, height: 5.2, scale: 1, zIndex: 22 },
+  'bus-right': { x: 61.6, y: 48.7, width: 9.4, height: 6.8, scale: 1, zIndex: 23 },
+  'auto-right': { x: 69.6, y: 53.8, width: 6.0, height: 5.7, scale: 1, zIndex: 25 },
+  'bike-left': { x: 25.7, y: 55.8, width: 4.9, height: 6.8, scale: 1, zIndex: 27 },
+  'ped-right': { x: 75.0, y: 48.9, width: 2.8, height: 5.0, scale: 1, zIndex: 23 },
 };
-
-const objectRealWidthM = {
-  car: 1.8,
-  bus: 2.55,
-  auto: 1.35,
-  'two-wheeler': 0.85,
-  pedestrian: 0.55,
-};
-
-const objectAspect = {
-  car: 0.78,
-  bus: 0.72,
-  auto: 0.96,
-  'two-wheeler': 1.24,
-  pedestrian: 1.72,
-};
-
-const sceneProjection = {
-  // Calibrated to the two reference lane lines drawn in EgoPathOverlay.jsx.
-  vanishingX: 50,
-  vanishingY: 39.7,
-  egoLaneLeftX: 38.2,
-  egoLaneRightX: 61.8,
-  egoGroundY: 88,
-  nearDistanceM: 6,
-  farDistanceM: 95,
-  laneWidthM: 3.5,
-  egoReferenceWidthPx: 380,
-  referenceViewportWidthPx: 1600,
-};
-
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
-}
-
-function projectDistance(distanceM) {
-  const d = clamp(distanceM, sceneProjection.nearDistanceM, sceneProjection.farDistanceM);
-  const invNear = 1 / sceneProjection.nearDistanceM;
-  const invFar = 1 / sceneProjection.farDistanceM;
-  const invD = 1 / d;
-  const normalized = clamp((invD - invFar) / (invNear - invFar), 0, 1);
-
-  // Inverse-distance projection gives a more natural road-plane placement than linear distance.
-  return Math.pow(normalized, 0.68);
-}
-
-function laneCenterXAtDepth(depth, laneOffsetM) {
-  const egoLaneWidth = sceneProjection.egoLaneRightX - sceneProjection.egoLaneLeftX;
-  const pxPerMeterAtEgo = egoLaneWidth / sceneProjection.laneWidthM;
-  const egoCenterX = (sceneProjection.egoLaneLeftX + sceneProjection.egoLaneRightX) / 2;
-  const groundX = egoCenterX + laneOffsetM * pxPerMeterAtEgo;
-  return sceneProjection.vanishingX + (groundX - sceneProjection.vanishingX) * depth;
-}
-
-function apparentObjectWidthVw(object, depth) {
-  const distanceM = clamp(object.distanceM, sceneProjection.nearDistanceM, sceneProjection.farDistanceM);
-  const realWidthM = objectRealWidthM[object.type] ?? 1.8;
-  const typeScale = realWidthM / objectRealWidthM.car;
-  const distanceScale = Math.pow(sceneProjection.nearDistanceM / (distanceM + 2), 0.72);
-  const depthBoost = 0.72 + depth * 0.56;
-  const apparentPx = sceneProjection.egoReferenceWidthPx * typeScale * distanceScale * depthBoost;
-  const vw = (apparentPx / sceneProjection.referenceViewportWidthPx) * 100;
-
-  return clamp(vw, 3.2, object.type === 'bus' ? 11.5 : 9.2);
-}
 
 function projectRoadObject(object) {
-  const depth = projectDistance(object.distanceM);
-  const x = laneCenterXAtDepth(depth, laneOffsetsM[object.lane] ?? 0);
-  const y = sceneProjection.vanishingY + (sceneProjection.egoGroundY - sceneProjection.vanishingY) * depth;
-  const width = apparentObjectWidthVw(object, depth);
-  const height = width * (objectAspect[object.type] ?? 0.85);
-  const scale = clamp(0.58 + depth * 0.82, 0.52, 1.22);
+  const locked = lockedDesignPlacement[object.id];
+
+  if (locked) {
+    return {
+      left: `${locked.x}%`,
+      top: `${locked.y}%`,
+      zIndex: locked.zIndex,
+      '--object-width': `${locked.width}vw`,
+      '--object-height': `${locked.height}vw`,
+      '--object-scale': locked.scale,
+      '--object-anchor-y': '-100%',
+    };
+  }
 
   return {
-    left: `${x}%`,
-    top: `${y}%`,
-    zIndex: Math.round(18 + depth * 8),
-    '--object-width': `${width}vw`,
-    '--object-height': `${height}vw`,
-    '--object-scale': scale,
+    left: '50%',
+    top: '50%',
+    zIndex: 22,
+    '--object-width': '6vw',
+    '--object-height': '5vw',
+    '--object-scale': 1,
     '--object-anchor-y': '-100%',
   };
 }
