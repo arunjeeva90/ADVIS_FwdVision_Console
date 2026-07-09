@@ -22,20 +22,13 @@
   filter: blur(10px) !important;
 }
 
-.road-surface::before {
-  opacity: 0.04;
-}
-
+/* The background image already contains the real lane geometry.
+   The overlay now draws two calibrated reference lines and the dynamic ego path. */
+.road-surface,
+.road-surface::before,
 .lane,
-.lane-edge {
-  opacity: 0.34;
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.14));
-}
-
-.lane-dashes {
-  opacity: 0.62 !important;
-}
-
+.lane-edge,
+.lane-dashes,
 .ego-path {
   display: none !important;
 }
