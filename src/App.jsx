@@ -10,8 +10,10 @@ import {
   Thermometer,
   Timer,
 } from 'lucide-react';
+import { EgoPathOverlay } from './components/EgoPathOverlay.jsx';
 import { telemetry } from './data/mockTelemetry.js';
 import './objectAssets.css';
+import './components/egoPathOverlay.css';
 import './frozenRefinements.css';
 
 const objectClassName = {
@@ -111,10 +113,11 @@ function RoadScene() {
         <div className="lane lane-center-left" />
         <div className="lane lane-center-right" />
         <div className="lane lane-right" />
-        <div className="ego-path" />
         <div className="lane-dashes lane-dashes-left" />
         <div className="lane-dashes lane-dashes-right" />
       </div>
+
+      <EgoPathOverlay />
 
       {telemetry.objects.map((object) => <RoadObject key={object.id} object={object} />)}
 
