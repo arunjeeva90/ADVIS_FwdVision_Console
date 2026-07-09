@@ -5,7 +5,17 @@
   object-fit: contain;
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 0 12px currentColor) drop-shadow(0 0 26px rgba(255, 160, 70, 0.28));
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.object-card:not(.is-risk) .object-asset {
+  opacity: 0.9;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.object-card.is-risk .object-asset {
+  opacity: 0.96;
+  filter: drop-shadow(0 0 8px rgba(255, 64, 91, 0.72));
 }
 
 .object-outline .silhouette,
@@ -22,6 +32,7 @@
   border: 0;
   background: transparent;
   overflow: visible;
+  filter: none;
 }
 
 .object-card.is-risk .object-outline {
@@ -32,10 +43,10 @@
 .object-card.is-risk .object-outline::before {
   content: '';
   position: absolute;
-  inset: -12px -18px;
-  border: 2px solid var(--red);
+  inset: -9px -14px;
+  border: 2px solid rgba(255, 64, 91, 0.92);
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255, 64, 91, 0.62), inset 0 0 20px rgba(255, 64, 91, 0.1);
+  box-shadow: 0 0 14px rgba(255, 64, 91, 0.46), inset 0 0 12px rgba(255, 64, 91, 0.08);
   z-index: 1;
 }
 
@@ -46,7 +57,7 @@
 .object-card[data-lane='far-left'] .object-outline { width: 112px; height: 126px; }
 .object-card[data-lane='shoulder-right'] .object-outline { width: 76px; height: 122px; }
 
-.object-card[data-lane='center'] { top: 152px; }
+.object-card[data-lane='center'] { top: 154px; }
 .object-card[data-lane='left'] { left: 34%; top: 255px; }
 .object-card[data-lane='right'] { right: 27.6%; top: 214px; }
 .object-card[data-lane='far-right'] { right: 18.8%; top: 272px; }
@@ -55,6 +66,6 @@
 
 .object-card > span:last-child {
   margin-top: -2px;
-  opacity: 0.78;
-  text-shadow: 0 0 8px currentColor;
+  opacity: 0.7;
+  text-shadow: 0 0 4px currentColor;
 }
