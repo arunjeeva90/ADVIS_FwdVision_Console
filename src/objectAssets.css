@@ -1,0 +1,76 @@
+.object-card {
+  position: absolute;
+  transform-origin: bottom center;
+  transform: translate(-50%, var(--object-anchor-y, -100%)) scale(var(--object-scale, 1));
+}
+
+.object-asset {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 1.5px currentColor);
+}
+
+.object-card:not(.is-risk) .object-asset {
+  opacity: 0.9;
+  filter: drop-shadow(0 0 1.5px currentColor);
+}
+
+.object-card.is-risk .object-asset {
+  opacity: 0.98;
+  filter: drop-shadow(0 0 4px rgba(255, 64, 91, 0.42));
+}
+
+.object-outline .silhouette,
+.object-outline .pedestrian-figure {
+  display: none;
+}
+
+.object-asset[src=''] + .silhouette,
+.object-asset:not([src]) + .silhouette {
+  display: block;
+}
+
+.object-card .object-outline {
+  width: var(--object-width, 6vw);
+  height: var(--object-height, 5vw);
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  filter: none;
+}
+
+.object-card.is-risk .object-outline {
+  background: transparent;
+  box-shadow: none;
+}
+
+.object-card.is-risk .object-outline::before {
+  content: '';
+  position: absolute;
+  inset: -8px -12px;
+  border: 2px solid rgba(255, 64, 91, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 64, 91, 0.38), inset 0 0 10px rgba(255, 64, 91, 0.06);
+  z-index: 1;
+}
+
+.object-distance {
+  transform: translateY(-4px) scale(calc(1 / var(--object-scale, 1)));
+  transform-origin: center bottom;
+}
+
+.object-label {
+  margin-top: -2px;
+  opacity: 0.58;
+  text-shadow: 0 0 3px currentColor;
+  transform: scale(calc(1 / var(--object-scale, 1)));
+  transform-origin: center top;
+}
+
+.object-card > span:not(.object-label) {
+  display: none;
+}

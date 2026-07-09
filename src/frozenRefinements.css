@@ -1,0 +1,104 @@
+/* Refinements for the frozen premium ADAS console direction.
+   This file intentionally overrides the earlier CSS-only debug landscape. */
+
+.road-scene {
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.13) 56%, rgba(0, 0, 0, 0.54)),
+    url('/assets/vehicles/landscape.png');
+  background-size: cover;
+  background-position: center 48%;
+  background-repeat: no-repeat;
+}
+
+.mountains,
+.city-line,
+.road-shoulder,
+.streetlights {
+  display: none !important;
+}
+
+.horizon-glow {
+  opacity: 0.25 !important;
+  filter: blur(10px) !important;
+}
+
+/* The background image already contains the real lane geometry.
+   The overlay now draws two calibrated reference lines and the dynamic ego path. */
+.road-surface,
+.road-surface::before,
+.lane,
+.lane-edge,
+.lane-dashes,
+.ego-path {
+  display: none !important;
+}
+
+.radial-speed-arc {
+  opacity: 0.2 !important;
+  filter: drop-shadow(0 0 12px rgba(39, 104, 255, 0.24)) !important;
+}
+
+.ego-vehicle {
+  bottom: 2px !important;
+  width: 500px !important;
+  height: 300px !important;
+  z-index: 30 !important;
+}
+
+.ego-vehicle-asset {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 380px;
+  height: auto;
+  max-height: 275px;
+  transform: translateX(-50%);
+  object-fit: contain;
+  filter:
+    drop-shadow(0 24px 34px rgba(0, 0, 0, 0.84))
+    drop-shadow(0 0 8px rgba(110, 160, 255, 0.10));
+  z-index: 4;
+}
+
+.car-body,
+.rear-glass,
+.tail-light,
+.bumper {
+  display: none !important;
+}
+
+.sensor-halo {
+  opacity: 0.52;
+  box-shadow:
+    0 0 8px rgba(255, 196, 58, 0.22),
+    inset 0 0 10px rgba(255, 185, 40, 0.08) !important;
+}
+
+.halo-1 {
+  width: 300px !important;
+  height: 95px !important;
+  bottom: 14px !important;
+}
+
+.halo-2 {
+  width: 230px !important;
+  height: 62px !important;
+  bottom: 42px !important;
+}
+
+.object-outline {
+  filter: none !important;
+}
+
+.object-distance {
+  box-shadow: 0 0 8px rgba(255, 64, 91, 0.32) !important;
+}
+
+.runtime-panel {
+  background: rgba(7, 12, 25, 0.82) !important;
+}
+
+.bottom-metrics {
+  background: rgba(5, 9, 19, 0.86) !important;
+  z-index: 46 !important;
+}
