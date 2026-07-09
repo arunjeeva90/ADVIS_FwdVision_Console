@@ -1,9 +1,9 @@
 .ego-path-overlay {
   position: absolute;
   left: 50%;
-  bottom: 18px;
-  width: 780px;
-  height: 500px;
+  bottom: 22px;
+  width: 520px;
+  height: 470px;
   transform: translateX(-50%);
   z-index: 18;
   pointer-events: none;
