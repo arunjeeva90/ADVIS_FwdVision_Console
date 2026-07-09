@@ -3,7 +3,7 @@
 
 .road-scene {
   background-image:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.16) 56%, rgba(0, 0, 0, 0.56)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.13) 56%, rgba(0, 0, 0, 0.54)),
     url('/assets/vehicles/landscape.png');
   background-size: cover;
   background-position: center 48%;
@@ -18,18 +18,22 @@
 }
 
 .horizon-glow {
-  opacity: 0.3 !important;
+  opacity: 0.25 !important;
   filter: blur(10px) !important;
 }
 
 .road-surface::before {
-  opacity: 0.08;
+  opacity: 0.04;
 }
 
 .lane,
 .lane-edge {
-  opacity: 0.48;
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.18));
+  opacity: 0.34;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.14));
+}
+
+.lane-dashes {
+  opacity: 0.62 !important;
 }
 
 .ego-path {
@@ -42,9 +46,9 @@
 }
 
 .ego-vehicle {
-  bottom: 34px !important;
-  width: 420px !important;
-  height: 255px !important;
+  bottom: 8px !important;
+  width: 570px !important;
+  height: 335px !important;
   z-index: 30 !important;
 }
 
@@ -52,14 +56,14 @@
   position: absolute;
   left: 50%;
   bottom: 0;
-  width: 318px;
+  width: 445px;
   height: auto;
-  max-height: 228px;
+  max-height: 318px;
   transform: translateX(-50%);
   object-fit: contain;
   filter:
-    drop-shadow(0 24px 34px rgba(0, 0, 0, 0.82))
-    drop-shadow(0 0 10px rgba(110, 160, 255, 0.16));
+    drop-shadow(0 28px 38px rgba(0, 0, 0, 0.86))
+    drop-shadow(0 0 10px rgba(110, 160, 255, 0.14));
   z-index: 4;
 }
 
@@ -71,22 +75,22 @@
 }
 
 .sensor-halo {
-  opacity: 0.64;
+  opacity: 0.56;
   box-shadow:
-    0 0 10px rgba(255, 196, 58, 0.28),
-    inset 0 0 12px rgba(255, 185, 40, 0.1) !important;
+    0 0 10px rgba(255, 196, 58, 0.24),
+    inset 0 0 12px rgba(255, 185, 40, 0.08) !important;
 }
 
 .halo-1 {
-  width: 292px !important;
-  height: 92px !important;
-  bottom: 8px !important;
+  width: 385px !important;
+  height: 118px !important;
+  bottom: 15px !important;
 }
 
 .halo-2 {
-  width: 222px !important;
-  height: 60px !important;
-  bottom: 33px !important;
+  width: 300px !important;
+  height: 78px !important;
+  bottom: 48px !important;
 }
 
 .object-outline {
@@ -102,5 +106,6 @@
 }
 
 .bottom-metrics {
-  background: rgba(5, 9, 19, 0.84) !important;
+  background: rgba(5, 9, 19, 0.86) !important;
+  z-index: 46 !important;
 }
