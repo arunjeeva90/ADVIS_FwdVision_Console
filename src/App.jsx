@@ -11,6 +11,7 @@ import {
   Timer,
 } from 'lucide-react';
 import { telemetry } from './data/mockTelemetry.js';
+import './objectAssets.css';
 
 const objectClassName = {
   car: 'object-card object-car',
